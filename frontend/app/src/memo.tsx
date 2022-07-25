@@ -2,7 +2,14 @@ import React, {useState} from 'react';
 import './memo.css';
 import AddNote from './AddNote';
 
-const MemoBox = ({id, text, hadleDelNote, handleUpdate, handleAddNote}) : any => {
+type MemoProps = {
+    id: string;
+    text: string;
+    hadleDelNote: any;
+    handleUpdate: any;
+}
+
+const MemoBox = ({id, text, hadleDelNote, handleUpdate}: MemoProps) => {
     const [memoText, setText] = useState(text);
     const [editable, setEditable] = useState(false);
     const editOn = () => {

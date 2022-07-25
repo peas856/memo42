@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import MemoList from './memoList';
 import {nanoid} from 'nanoid';
 
+type Note = {
+  id:string;
+  text:string;
+};
+
 function App() {
   const [notes, setNotes] = useState([
     {
@@ -18,7 +23,7 @@ function App() {
     },
   ]);
 
-  const addNote = (text) => {
+  const addNote = (text: string) => {
     const newNote = {
       id :nanoid(),
       text : text,
@@ -27,12 +32,12 @@ function App() {
     setNotes(newNotes);
   }
 
-  const deleteNote = (id) => {
+  const deleteNote = (id:string) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
   }
 
-  const updateNote = (id, text) => {
+  const updateNote = (id:string, text:string) => {
     const updated = {
       id: id,
       text: text,

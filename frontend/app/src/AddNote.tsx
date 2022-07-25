@@ -1,9 +1,9 @@
 import './AddNote.css'
 import {useState} from 'react';
-const AddNote = ({handleAddNote}) => {
+const AddNote = ({handleAddNote}: any) => {
     const [note, setNote] = useState('');
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         setNote(e.target.value);
     }
     

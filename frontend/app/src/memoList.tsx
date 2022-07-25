@@ -4,16 +4,23 @@ import MemoBox from './memo';
 import AddNote from './AddNote';
 import './memoList.css'
 
-// type Note = {
-//   id : string;
-//   text : String;
-// }
+type Note = {
+  id:string;
+  text:string;
+};
 
-const memoList = ({notes, handleAddNote, hadleDelNote, handleUpdate}) =>
+type memoListProps = {
+  notes : Array<Note>;
+  handleAddNote : any;
+  hadleDelNote : any;
+  handleUpdate : any;
+};
+
+const memoList = ({notes, handleAddNote, hadleDelNote, handleUpdate} : memoListProps) =>
 {
     return (
     <div className='memoList'>
-      {notes.map((note)=> <MemoBox id={note.id} text={note.text} hadleDelNote = {hadleDelNote} handleUpdate = {handleUpdate} handleAddNote = {handleAddNote}/>)}
+      {notes.map((note)=> <MemoBox id={note.id} text={note.text} hadleDelNote = {hadleDelNote} handleUpdate = {handleUpdate}/>)}
       <AddNote handleAddNote = {handleAddNote}/>
     </div>
     );
