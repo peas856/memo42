@@ -5,22 +5,21 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const FriendView = () => {
-    const [profile, setProfile] = useState(false);
-    
-    const clickFriend = () => {
-        setProfile(true);
+    const [id, setId] = useState(false);
+    const clickFriend = (userId) => {
+        setId(userId);
     }
 
     return (
         <>
         {pofile ? (
             <div>
-                {FriendList}
-                {UserProfile}
+                <FriendList clickFriend={clickFriend}/>
+                <UserProfile user = {id}/>
             </div>
         ): (
             <>
-                {FriendList}
+                <FriendList clickFriend={clickFriend}/>
             </>
         )};
         </>

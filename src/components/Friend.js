@@ -18,7 +18,7 @@ const Friend = ({id, url, clickFriend}) =>
 {
     console.log(url);
     return (
-        <Profile onClick={()=>clickFriend()}>
+        <Profile onClick={()=>clickFriend(id)}>
             <div>
                 <Img 
                 src={url}
