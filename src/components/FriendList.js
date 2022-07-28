@@ -3,6 +3,25 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+const ListDiv = styled.div `
+    width: 100%;
+    height: 100%;
+    background-color:rgba(255, 255, 128, .5);
+    padding-bottom:1rem;
+`;
+
+const Header = styled.h1`
+    text-align:center;
+    padding-top:1rem;
+`
+const Input = styled.input`
+    display: block;
+    margin : 2rem auto;
+    border:0;
+    width:10%;
+    padding:1rem;
+`
+
 const FriendList = ({clickFriend}) =>{
     const [text, setText] = useState('');
     
@@ -15,6 +34,7 @@ const FriendList = ({clickFriend}) =>{
     
     const handleChange = (e) => {
         setText(e.target.value);
+        clickFriend('');
     };
 
     const showSerchedList = (Dummy) => {
@@ -30,25 +50,24 @@ const FriendList = ({clickFriend}) =>{
     };
 
     return (
-        <>
+        <ListDiv>
         {text ? 
         (
             <>
-            <h1>검색 결과</h1>
-            {}
+            <Header>검색 결과</Header>
+            <Input placeholder='인트라 아이디를 입력하세요' onChange = {handleChange} value = {text} autoFocus></Input>
             {showSerchedList(Dummy).map((user) => <Friend id={user.id} url={user.url} clickFriend={clickFriend}/>)}
-            <input placeholder='인트라 아이디를 입력하세요' onChange = {handleChange} value = {text} autoFocus></input>
             </>
         ):(
             <> 
-            <h1>친구 목록</h1>
+            <Header>친구 목록</Header>
+            <Input placeholder='인트라 아이디를 입력하세요' onChange = {handleChange} value = {text} autoFocus></Input>
             <Friend id ={user.id} url = {user.url} clickFriend={clickFriend}/>
             <Friend id ={user.id} url = {user.url} clickFriend={clickFriend}/>
             <Friend id ={user.id} url = {user.url} clickFriend={clickFriend}/>
-            <input placeholder='인트라 아이디를 입력하세요' onChange = {handleChange} value = {text} autoFocus></input>
             </>
         )}
-        </>
+        </ListDiv>
     );
 }
 export default FriendList;

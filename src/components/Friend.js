@@ -10,13 +10,19 @@ const Img = styled.img`
 const Profile = styled.div`
     display:flex;
     justify-content:center;
-    height : 50px;
+    height:50px;
+    margin:1rem;
 
 `;
 
+const Div = styled.div`
+    text-align:center;
+    margin:1rem;
+    width:10%;
+`
+
 const Friend = ({id, url, clickFriend}) => 
 {
-    console.log(url);
     return (
         <Profile onClick={()=>clickFriend(id)}>
             <div>
@@ -25,8 +31,8 @@ const Friend = ({id, url, clickFriend}) =>
                 alt=""
                 />
             </div>
-            <div>{id}</div>
-            <div>로그인 상태</div>
+            <Div>{id}</Div>
+            <Div>로그인 상태</Div>
       </Profile>
     );
 }

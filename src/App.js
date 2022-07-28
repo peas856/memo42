@@ -1,10 +1,10 @@
 
-import FriendList from './components/FriendList'
+import FriendView from './components/FriendView'
 
 function App() {
   return (
     <div>
-      <FriendList/>
+      <FriendView/>
     </div>
   );
 }
