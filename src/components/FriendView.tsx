@@ -14,13 +14,13 @@ const Div = styled.div`
 `
 const FriendView = () => {
     const [id, setId] = useState('');
-    const clickFriend = (userId) => {
+    const clickFriend = (userId:string) => {
         setId(userId);
     }
 
     return (
         <>
-        {id ? (
+        {id ? ( 
             <FriendProfile>
             <Div>
                 <FriendList clickFriend={clickFriend}/>

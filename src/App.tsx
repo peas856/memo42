@@ -1,10 +1,12 @@
 
 import FriendView from './components/FriendView'
+import React from 'react'
+import Pong from './components/Pong';
 
 function App() {
   return (
     <div>
-      <FriendView/>
+      <Pong/>
     </div>
   );
 }

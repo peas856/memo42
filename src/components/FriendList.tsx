@@ -2,6 +2,7 @@ import Friend from './Friend';
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { string } from 'prop-types';
 
 const ListDiv = styled.div `
     width: 100%;
@@ -22,23 +23,28 @@ const Input = styled.input`
     padding:1rem;
 `
 
-const FriendList = ({clickFriend}) =>{
+type USER = {
+    id:string;
+    url:string
+}
+
+const FriendList = ({clickFriend}:any) =>{
     const [text, setText] = useState('');
     
-    const Dummy = [
+    const Dummy: USER[] = [
         {id : "tommy", url: "https://picsum.photos/200/200"},
         {id : "booy", url: "https://picsum.photos/200/200"},
         {id : "tossj", url: "https://picsum.photos/200/200"},
         {id : "abcs", url: "https://picsum.photos/200/200"}
     ];
     
-    const handleChange = (e) => {
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
         clickFriend('');
     };
 
-    const showSerchedList = (Dummy) => {
-        const filtered = Dummy.filter((itemList) => {
+    const showSerchedList = (Dummy : USER[]) => {
+        const filtered = Dummy.filter((itemList: USER) => {
             return itemList.id.toUpperCase().includes(text.toUpperCase());
         });
         return filtered;

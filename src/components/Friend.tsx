@@ -12,7 +12,6 @@ const Profile = styled.div`
     justify-content:center;
     height:50px;
     margin:1rem;
-
 `;
 
 const Div = styled.div`
@@ -20,8 +19,13 @@ const Div = styled.div`
     margin:1rem;
     width:10%;
 `
+type User = {
+    id:string;
+    url:string;
+    clickFriend:any
+};
 
-const Friend = ({id, url, clickFriend}) => 
+const Friend = ({id, url, clickFriend}:User) => 
 {
     return (
         <Profile onClick={()=>clickFriend(id)}>
