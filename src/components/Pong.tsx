@@ -8,24 +8,6 @@ const Canvas = styled.canvas`
     background: black;
 `
 
-// type Position = {
-//     w:number;
-//     h:number;
-//     x:number;
-//     y:number;
-// }
-
-
-// enum KeyBindings{
-//     "Up" = 38,
-//     "Down" = 40,
-//     W = 87,
-//     S = 83
-// }
-
-// use 1의 바 -> up/down 키보드 인식->백엔드로 post
-// 공 컴포넌트
-// user 2의 바 -> 백엔드에서 받아옴
 
 const Ball = (ballPosition:number[], score:number[], xVel:number, yVel:number, context:any, leftY:number, rightY:number) => {
 
@@ -131,18 +113,34 @@ const Pong = () => {
     const keysPressed  = [false, false, false, false];
     const keys = ["ArrowDown", "ArrowUp", "s", "w"];
     const requestAnimationRef = useRef<number>(0);
-    const canvas = canvasRef.current;
-    const gameContext = canvas?.getContext("2d");
-    let leftY = 400 / 2 - 20 / 2;
-    let rightY = 400 / 2 - 20 / 2;
+    let canvas:HTMLCanvasElement|null;
+    let gameContext:CanvasRenderingContext2D|null|undefined;
+    const canvasWidth = 700;
+    const canvasHeight = 400;
+    let leftY = canvasHeight / 2 - 20 / 2;
+    let rightY = canvasHeight / 2 - 20 / 2;
     const ballSize : number = 10;
-    const ballPosition = [700/2 - 10/2, 400/2 - 10/2];
+    const ballPosition = [canvasWidth/2 - ballSize/2, canvasHeight/2 - ballSize/2];
     const score = [0, 0];
     let arr = [...ballPosition, ...score, -1, 1];
 
+    useEffect(() => {
+        canvas = canvasRef.current;
+        gameContext = canvas?.getContext("2d");
+        let idx;
+        window.addEventListener("keydown", (e) => {
+            if ((idx = keys.indexOf(e.key)) >= 0)
+                keysPressed[idx] = true;
+         });
+         window.addEventListener("keyup", (e) => {
+            if ((idx = keys.indexOf(e.key)) >= 0)
+                keysPressed[idx] = false;
+         })
+         requestAnimationRef.current  = requestAnimationFrame(render);
+         return () => cancelAnimationFrame(requestAnimationRef.current);
+    }, []); 
+
     const drawBoardDetails = (context:any) =>{
-        const canvasWidth = 700;
-        const canvasHeight = 400;
         context.strokeStyle = "#fff";
         context.lineWidth = 5;
         context.strokeRect(10,10,canvasWidth - 20 ,canvasHeight - 20);
@@ -160,35 +158,23 @@ const Pong = () => {
         gameContext.font = "30px Orbitron";
         gameContext.fillStyle = "#000";
         gameContext.fillRect(0,0,700,400);
-        drawBoardDetails(gameContext);
         leftY = leftPaddle(keysPressed, gameContext, leftY);
         rightY = rightPaddle(keysPressed, gameContext, rightY);
         arr = Ball([arr[0], arr[1]], [arr[2], arr[3]], arr[4], arr[5], gameContext, leftY, rightY);
+        drawBoardDetails(gameContext);
     }
+
     const render = () => {
         update();
         if (arr[2] > 0 || arr[3] > 0)
         {
             gameContext?.fillText("Game Over", 280, 200);
+            cancelAnimationFrame(requestAnimationRef.current);
             return ;
         }
         requestAnimationFrame(render);
     } 
-
-    useEffect(() => {
-        let idx;
-        window.addEventListener("keydown", (e) => {
-            if ((idx = keys.indexOf(e.key)) >= 0)
-                keysPressed[idx] = true;
-         });
-         window.addEventListener("keyup", (e) => {
-            if ((idx = keys.indexOf(e.key)) >= 0)
-                keysPressed[idx] = false;
-         })
-         requestAnimationRef.current  = requestAnimationFrame(render);
-         return () => cancelAnimationFrame(requestAnimationRef.current);
-    }, [])
-
+  
     return (
         <>
         <Canvas width="700" height="400" ref={canvasRef}/>
@@ -196,8 +182,3 @@ const Pong = () => {
     );
 }
 export default Pong;
-
-// 게임을 그려줘야 하는 경우
-// 1. Player1 position 변경 -> keyevent 발생 -> 백엔드에 post
-// 2. Player2 position 변경 -> 그리기 전에 백엔드에 요청
-// 3. 볼의 포지션 변경
